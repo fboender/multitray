@@ -1,8 +1,9 @@
 # MultiTray
 
-MultiTray is a simple Python script for showing one or more system tray icons.
-You can easily change the tray icons from the commandline or shell scripts by
-writing instructions to a named fifo pipe (special file on disk).
+MultiTray is a simple Python script for showing one or more desktop system
+tray icons.  You can easily change the tray icons from the commandline or
+shell scripts by writing instructions to a named fifo pipe (special file on
+disk).
 
 # Usage
 
