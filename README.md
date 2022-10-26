@@ -38,17 +38,17 @@ Examples:
 
     # Create a tray with name "myfirsticon" and set it's icon to a green PNG
     # image.
-    $ echo "myfirsticon set-icon /home/fboender/icons/green.png" > multitray.info
+    $ echo "myfirsticon set-icon /home/fboender/icons/green.png" > multitray.fifo
 
     # Change the icon to red and add a tooltip
-    $ echo "myfirsticon set-icon /home/fboender/icons/red.png" > multitray.info
-    $ echo "myfirsticon set-tooltip The flobulator is not cromulent" > multitray.info
+    $ echo "myfirsticon set-icon /home/fboender/icons/red.png" > multitray.fifo
+    $ echo "myfirsticon set-tooltip The flobulator is not cromulent" > multitray.fifo
 
     # Hide the icon
-    $ echo "myfirsticon hide" > multitray.info
+    $ echo "myfirsticon hide" > multitray.fifo
 
     # Show the icon
-    $ echo "myfirsticon show" > multitray.info
+    $ echo "myfirsticon show" > multitray.fifo
 
     # Remove the icon
-    $ echo "myfirsticon remove" > multitray.info
+    $ echo "myfirsticon remove" > multitray.fifo
