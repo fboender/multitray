@@ -6,6 +6,7 @@ import os
 import sys
 import logging
 import signal
+import time
 import shlex
 from PyQt5.QtCore import QTimer, QObject, QThread, pyqtSignal, pyqtSlot
 from PyQt5.QtGui import *
@@ -35,6 +36,7 @@ class PipeReader(QObject):
 
         with open(self.pipepath) as fifo:
             while True:
+                time.sleep(0.1)
                 for line in fifo:
                     self.buffer.append(line.strip())
 
