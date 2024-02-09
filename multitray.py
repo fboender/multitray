@@ -52,19 +52,37 @@ class TrayIcon():
     """
     Class to manage a single tray icon.
     """
-    def __init__(self, name, icon_path=None):
+    def __init__(self, name):
         self.name = name
-        self.icon_path = icon_path
         self.qt_icon_ref = None
-
         self.tray = QSystemTrayIcon()
-        if self.icon_path is not None:
-            self.set_icon(self.icon_path)
 
     def set_icon(self, icon_path):
+        self.icon_path = icon_path
         self.icon = QIcon(icon_path)
         self.tray.setIcon(self.icon)
         self.tray.setVisible(True)
+
+    def blink(self):
+        self.blink_status = 0
+        self.orig_icon_path = self.icon_path
+
+        self.blinker = QTimer()
+        self.blinker.timeout.connect(self._blink)
+        self.blinker.setInterval(500)
+        self.blinker.start()
+
+    def unblink(self):
+        self.blinker.stop()
+        del self.blinker
+
+    def _blink(self):
+        if self.blink_status == 0:
+            self.set_icon(None)
+            self.blink_status = 1
+        else:
+            self.set_icon(self.orig_icon_path)
+            self.blink_status = 0
 
 
 class Tray:
@@ -83,6 +101,8 @@ class Tray:
             "show": self._handle_cmd_show,
             "hide": self._handle_cmd_hide,
             "remove": self._handle_cmd_remove,
+            "blink": self._handle_cmd_blink,
+            "unblink": self._handle_cmd_unblink,
         }
 
         self.app = QApplication([])
@@ -155,6 +175,13 @@ class Tray:
         tray_icon.tray.setVisible(False)
         tray_icon_name = tray_icon.name
         del self.tray_icons[tray_icon_name]
+
+    def _handle_cmd_blink(self, tray_icon, params):
+        tray_icon.blink()
+
+    def _handle_cmd_unblink(self, tray_icon, params):
+        tray_icon.unblink()
+
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
